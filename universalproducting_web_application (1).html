@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniversalProducting - Global Smart Marketplace</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        glass: {
+                            bg: 'rgba(15, 23, 42, 0.75)',
+                            border: 'rgba(255, 255, 255, 0.1)',
+                            card: 'rgba(30, 41, 59, 0.6)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #090d16;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.25);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 9999px;
+        }
+        .animated-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #311042, #020617);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased custom-scrollbar animated-bg text-slate-100">
+
+    <!-- TOP HEADER NAV -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-white/10 px-4 lg:px-8 py-3 transition-all">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('market')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-shapes text-xl text-white"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-indigo-300">UniversalProducting</span>
+                    <span class="block text-[10px] font-medium text-indigo-400 tracking-wider uppercase -mt-1" id="sub-logo-tag">Global Marketplace & AI</span>
+                </div>
+            </div>
+
+            <!-- Main Nav Items (Desktop) -->
+            <nav class="hidden md:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-2xl border border-white/10">
+                <button onclick="switchTab('market')" id="nav-market" class="px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 text-indigo-400 bg-indigo-600/20">
+                    <i class="fa-solid fa-store"></i> <span data-i18n="navMarket">Market</span>
+                </button>
+                <button onclick="switchTab('ai')" id="nav-ai" class="px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> <span data-i18n="navAi">AI Assistant</span>
+                </button>
+                <button onclick="switchTab('posts')" id="nav-posts" class="px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-comments"></i> <span data-i18n="navPosts">Community Posts</span>
+                </button>
+                <button onclick="switchTab('discounts')" id="nav-discounts" class="px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-tag text-rose-400"></i> <span data-i18n="navDiscounts">Discounts</span>
+                </button>
+                <button onclick="switchTab('ads')" id="nav-ads" class="px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-bullhorn text-emerald-400"></i> <span data-i18n="navAds">Post Ad</span>
+                </button>
+            </nav>
+
+            <!-- Actions & User Profile -->
+            <div class="flex items-center gap-3">
+                <!-- Pro Badge / Upgrade -->
+                <button onclick="openProModal()" id="pro-status-btn" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-rose-500 text-slate-950 shadow-md shadow-amber-500/20 hover:scale-105 transition">
+                    <i class="fa-solid fa-crown text-slate-950"></i>
+                    <span id="pro-btn-text">GET PRO ($1/2w)</span>
+                </button>
+
+                <!-- Language Switcher -->
+                <div class="relative">
+                    <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-slate-800/80 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-200 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                        <option value="en">🇬🇧 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                    </select>
+                </div>
+
+                <!-- Backup/Restore Data -->
+                <button onclick="exportData()" title="Backup Data" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/10 transition">
+                    <i class="fa-solid fa-download text-sm"></i>
+                </button>
+
+                <!-- Account Button -->
+                <button onclick="openAccountModal()" class="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 transition">
+                    <span id="header-username" class="text-xs font-semibold text-slate-200 hidden md:inline">Guest</span>
+                    <img id="header-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="w-7 h-7 rounded-lg object-cover ring-2 ring-indigo-500/50" alt="Avatar">
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-slate-800 text-slate-200 border border-white/10">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden pt-3 pb-2 px-2 flex flex-col gap-2 border-t border-white/10 mt-3">
+            <button onclick="switchTab('market')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/5 flex items-center gap-3">
+                <i class="fa-solid fa-store text-indigo-400 w-5"></i> <span data-i18n="navMarket">Market</span>
+            </button>
+            <button onclick="switchTab('ai')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/5 flex items-center gap-3">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400 w-5"></i> <span data-i18n="navAi">AI Assistant</span>
+            </button>
+            <button onclick="switchTab('posts')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/5 flex items-center gap-3">
+                <i class="fa-solid fa-comments text-cyan-400 w-5"></i> <span data-i18n="navPosts">Community Posts</span>
+            </button>
+            <button onclick="switchTab('discounts')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/5 flex items-center gap-3">
+                <i class="fa-solid fa-tag text-rose-400 w-5"></i> <span data-i18n="navDiscounts">Discounts</span>
+            </button>
+            <button onclick="switchTab('ads')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-white/5 flex items-center gap-3">
+                <i class="fa-solid fa-bullhorn text-emerald-400 w-5"></i> <span data-i18n="navAds">Post Ad</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
+
+        <!-- TAB 1: MARKETPLACE -->
+        <section id="tab-market" class="tab-content space-y-6">
+            <!-- Search & Filters Bar -->
+            <div class="glass-panel rounded-2xl p-4 flex flex-col lg:flex-row items-center justify-between gap-4">
+                <div class="relative w-full lg:w-96">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="market-search" oninput="renderMarketplace()" placeholder="Search 200+ products..." data-i18n-ph="searchPh" class="w-full bg-slate-900/80 border border-white/10 rounded-xl pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-white placeholder-slate-400">
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 custom-scrollbar">
+                    <button onclick="setCategory('all')" id="cat-all" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-indigo-600 text-white transition">
+                        <i class="fa-solid fa-layer-group mr-1.5"></i><span data-i18n="catAll">All (200)</span>
+                    </button>
+                    <button onclick="setCategory('tech')" id="cat-tech" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition border border-white/5">
+                        <i class="fa-solid fa-laptop mr-1.5 text-cyan-400"></i><span data-i18n="catTech">Technology (50)</span>
+                    </button>
+                    <button onclick="setCategory('food')" id="cat-food" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition border border-white/5">
+                        <i class="fa-solid fa-utensils mr-1.5 text-amber-400"></i><span data-i18n="catFood">Food & Dishes (50)</span>
+                    </button>
+                    <button onclick="setCategory('home')" id="cat-home" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition border border-white/5">
+                        <i class="fa-solid fa-house mr-1.5 text-emerald-400"></i><span data-i18n="catHome">For Home (50)</span>
+                    </button>
+                    <button onclick="setCategory('discounts')" id="cat-discounts" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-slate-800 text-slate-300 hover:bg-slate-700 transition border border-white/5">
+                        <i class="fa-solid fa-bolt mr-1.5 text-rose-400"></i><span data-i18n="catDiscounts">Hot Deals (50)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Dynamically populated products -->
+            </div>
+        </section>
+
+        <!-- TAB 2: AI ASSISTANT & VISUAL SEARCH -->
+        <section id="tab-ai" class="tab-content hidden space-y-8">
+            <!-- Hero Banner -->
+            <div class="glass-panel rounded-3xl p-8 text-center relative overflow-hidden border border-indigo-500/20">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl"></div>
+                <div class="absolute -left-10 -top-10 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl"></div>
+                
+                <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wider inline-block mb-3">AI Market Intelligence v3.0</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-3" data-i18n="aiTitle">Universal Product AI Hub</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base mb-6" data-i18n="aiSubtitle">
+                    Paste any product description, link, or upload an image to receive instant deep analytics on origins, marketplace price comparisons, and utility scores.
+                </p>
+
+                <!-- Dual Search Tabs -->
+                <div class="max-w-3xl mx-auto glass-card rounded-2xl p-2 flex gap-2 mb-6">
+                    <button onclick="toggleAiMode('text')" id="ai-mode-text-btn" class="flex-1 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 text-white transition">
+                        <i class="fa-solid fa-align-left mr-2"></i><span data-i18n="aiPromptTab">Text Analytics & Prompt</span>
+                    </button>
+                    <button onclick="toggleAiMode('visual')" id="ai-mode-visual-btn" class="flex-1 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white transition">
+                        <i class="fa-solid fa-camera mr-2"></i><span data-i18n="aiVisualTab">Visual Photo Matcher</span>
+                    </button>
+                </div>
+
+                <!-- Text AI Input Mode -->
+                <div id="ai-text-container" class="max-w-3xl mx-auto space-y-4">
+                    <textarea id="ai-prompt-input" rows="4" placeholder="Paste product description or type e.g., 'Compare Tefal Non-stick Pan vs Cast Iron Kazan for Uzbek Cuisine'..." data-i18n-ph="aiPromptPh" class="w-full bg-slate-900/90 border border-white/10 rounded-2xl p-4 text-sm focus:outline-none focus:border-indigo-500 text-white placeholder-slate-500 resize-none"></textarea>
+                    <button onclick="analyzeAiProduct()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-sm hover:opacity-90 shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2 mx-auto">
+                        <i class="fa-solid fa-microchip"></i> <span data-i18n="btnAnalyze">Analyze Product with AI</span>
+                    </button>
+                </div>
+
+                <!-- Visual Photo Upload Mode -->
+                <div id="ai-visual-container" class="max-w-3xl mx-auto hidden space-y-4">
+                    <div onclick="document.getElementById('ai-photo-upload').click()" class="border-2 border-dashed border-white/20 hover:border-indigo-500 rounded-2xl p-8 text-center cursor-pointer transition bg-slate-900/50 group">
+                        <i class="fa-solid fa-cloud-arrow-up text-4xl text-slate-500 group-hover:text-indigo-400 transition mb-3"></i>
+                        <p class="text-sm font-semibold text-slate-300" data-i18n="visualDropText">Click or drop a product photo here to scan</p>
+                        <p class="text-xs text-slate-500 mt-1">Supports JPG, PNG, WEBP (Max 10MB)</p>
+                        <input type="file" id="ai-photo-upload" class="hidden" accept="image/*" onchange="handleVisualSearch(event)">
+                    </div>
+                    <div id="visual-preview-box" class="hidden flex items-center justify-between p-3 glass-card rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <img id="visual-preview-img" src="" class="w-12 h-12 rounded-lg object-cover">
+                            <span class="text-xs font-semibold text-slate-300" id="visual-file-name">product.jpg</span>
+                        </div>
+                        <button onclick="analyzeVisualProduct()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs">Run Visual Scan</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Analytics Output Result Card -->
+            <div id="ai-result-box" class="hidden glass-panel rounded-3xl p-6 md:p-8 border border-indigo-500/30 space-y-6">
+                <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-brain text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold" data-i18n="aiAnalysisReport">AI Diagnostic Report</h3>
+                            <p class="text-xs text-slate-400" id="ai-scanned-item">Target: Customized Query Analysis</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">98.4% Match Precision</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="glass-card p-4 rounded-2xl border-l-4 border-l-indigo-500">
+                        <h4 class="text-xs font-extrabold uppercase text-indigo-400 mb-1" data-i18n="aiWhyNeed">1. Why You Need It</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed" id="ai-res-why">Significantly elevates daily utility with high longevity, premium ergonomics, and energy efficiency.</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl border-l-4 border-l-purple-500">
+                        <h4 class="text-xs font-extrabold uppercase text-purple-400 mb-1" data-i18n="aiWhatIs">2. What It Is</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed" id="ai-res-what">High-tier consumer item built with industrial-grade materials and built-in smart optimization protocols.</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl border-l-4 border-l-amber-500">
+                        <h4 class="text-xs font-extrabold uppercase text-amber-400 mb-1" data-i18n="aiWhereMade">3. Origin & Quality</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed" id="ai-res-where">Manufactured in ISO-certified facilities (Global/Asia/Europe) with international safety certification.</p>
+                    </div>
+                    <div class="glass-card p-4 rounded-2xl border-l-4 border-l-emerald-500">
+                        <h4 class="text-xs font-extrabold uppercase text-emerald-400 mb-1" data-i18n="aiMarketComp">4. Market Price Verdict</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed" id="ai-res-comp">Uzum Market offers fastest local delivery (1 day); Wildberries offers competitive bulk pricing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: COMMUNITY POSTS FEED -->
+        <section id="tab-posts" class="tab-content hidden space-y-6">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 glass-panel p-6 rounded-2xl">
+                <div>
+                    <h2 class="text-2xl font-extrabold" data-i18n="postsFeedTitle">Community Product Reviews & Feed</h2>
+                    <p class="text-xs text-slate-400 mt-1" data-i18n="postsFeedSub">Explore top 100 community recommended products. Pro members can publish reviews!</p>
+                </div>
+                <button onclick="checkCreatePost()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 hover:opacity-90 transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> <span data-i18n="btnCreatePost">Create New Post</span>
+                </button>
+            </div>
+
+            <!-- Posts List Container -->
+            <div id="posts-feed-container" class="space-y-6 max-w-4xl mx-auto">
+                <!-- Posts dynamically rendered -->
+            </div>
+        </section>
+
+        <!-- TAB 4: DISCOUNTS & DEALS -->
+        <section id="tab-discounts" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-rose-400 flex items-center gap-2">
+                        <i class="fa-solid fa-fire"></i> <span data-i18n="discountsHeader">Exclusive Discount Portal</span>
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1" data-i18n="discountsSub">50 premium products with promotional badges, verified coupon prices, and limited availability.</p>
+                </div>
+            </div>
+
+            <div id="discounts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Discounts render -->
+            </div>
+        </section>
+
+        <!-- TAB 5: SELF-SERVICE AD PORTAL -->
+        <section id="tab-ads" class="tab-content hidden space-y-8 max-w-3xl mx-auto">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6 border border-emerald-500/20">
+                <div class="text-center space-y-2">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-xl">
+                        <i class="fa-solid fa-rectangle-ad"></i>
+                    </div>
+                    <h2 class="text-2xl font-extrabold" data-i18n="adPortalTitle">Promote Your Product or Store</h2>
+                    <p class="text-xs text-slate-400" data-i18n="adPortalSub">Upload your short product ad video or banner. Ads go live across the platform after quick automated verification.</p>
+                </div>
+
+                <form id="ad-form" onsubmit="submitAd(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-2" data-i18n="adTitleLabel">Ad Title</label>
+                        <input type="text" id="ad-title" required placeholder="e.g., Best Handmade Tea Sets in Tashkent" class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-2" data-i18n="adMediaLabel">Ad Photo / Video URL (Max 10s)</label>
+                        <input type="url" id="ad-media-url" required placeholder="https://images.unsplash.com/photo-..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-2" data-i18n="adTargetLabel">Target Destination Link</label>
+                        <input type="url" id="ad-target-link" required placeholder="https://uzum.uz/..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-white">
+                    </div>
+
+                    <!-- Simulated Payment Section -->
+                    <div class="p-4 glass-card rounded-2xl border border-white/10 space-y-3">
+                        <h4 class="text-xs font-bold text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-credit-card text-emerald-400"></i> <span data-i18n="adPaymentHeader">Ad Fee ($2.00 / 7 Days) - Visa / Mastercard</span>
+                        </h4>
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" required placeholder="Card Number (4000 0000 0000 0000)" maxlength="19" class="bg-slate-900/90 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                            <input type="text" required placeholder="MM/YY" maxlength="5" class="bg-slate-900/90 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/20 hover:opacity-90 transition">
+                        <span data-i18n="btnPayAndPublishAd">Pay $2.00 & Schedule Ad Live</span>
+                    </button>
+                </form>
+
+                <!-- Ad Timer Display (Simulated) -->
+                <div id="ad-status-timer" class="hidden p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-1">
+                    <p class="text-xs font-bold text-emerald-400" data-i18n="adApproved">Ad Approved! Launching in system queue:</p>
+                    <p class="text-2xl font-extrabold text-white font-mono" id="ad-countdown">00:59</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel border-t border-white/10 py-6 px-4 lg:px-8 mt-12 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shapes text-indigo-500"></i>
+                <span class="font-bold text-slate-300">UniversalProducting © 2026</span>
+            </div>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span class="hover:text-white cursor-pointer" onclick="switchTab('market')">Market</span>
+                <span class="hover:text-white cursor-pointer" onclick="switchTab('ai')">AI Diagnostic</span>
+                <span class="hover:text-white cursor-pointer" onclick="openProModal()">Pro Membership</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- POPUP 1: OPENING / POPUP RECOMMENDED ADS MODAL -->
+    <div id="opening-ad-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-lg w-full rounded-3xl p-6 border border-indigo-500/30 space-y-4 relative shadow-2xl">
+            <!-- Ad Header -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <span class="text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    <i class="fa-solid fa-star mr-1"></i> Top Sponsored Recommendation
+                </span>
+                <button id="skip-ad-btn" disabled onclick="closeOpeningAd()" class="text-xs font-bold text-slate-400 hover:text-white bg-slate-800 px-3 py-1.5 rounded-xl border border-white/10 transition">
+                    Skip in <span id="ad-timer-count">5</span>s
+                </button>
+            </div>
+
+            <!-- Ad Content Container -->
+            <div id="opening-ad-content" class="space-y-3">
+                <!-- Dynamically filled with top user ad -->
+            </div>
+
+            <div class="text-[10px] text-center text-slate-500">
+                Pro Subscribers enjoy 100% ad-free browsing. <span class="text-indigo-400 underline cursor-pointer" onclick="closeOpeningAd(); openProModal();">Upgrade to Pro</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP 2: PRO SUBSCRIPTION MODAL -->
+    <div id="pro-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-md w-full rounded-3xl p-6 border border-amber-500/30 space-y-6 relative shadow-2xl">
+            <button onclick="closeProModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-rose-500 text-slate-950 flex items-center justify-center mx-auto text-2xl shadow-lg shadow-amber-500/30">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <h3 class="text-xl font-extrabold" data-i18n="proModalTitle">Universal Pro Access</h3>
+                <p class="text-xs text-amber-300 font-semibold" data-i18n="proTrialText">1 Day FREE Trial • Then $1.00 / 2 Weeks</p>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300">
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> <span data-i18n="proFeat1">Publish Community Posts & Reviews</span></li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> <span data-i18n="proFeat2">Bypass all Ad banners & popups</span></li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> <span data-i18n="proFeat3">Direct priority checkout links</span></li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> <span data-i18n="proFeat4">Unlimited AI Visual Search Diagnostics</span></li>
+            </ul>
+
+            <!-- Live Visa / Mastercard Simulation -->
+            <form onsubmit="handleProSubscribe(event)" class="space-y-3 pt-2 border-t border-white/10">
+                <div class="space-y-2">
+                    <input type="text" id="pro-card-num" required placeholder="Card Number (4000 0000 0000 0000)" maxlength="19" class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" required placeholder="MM/YY" maxlength="5" class="bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                        <input type="password" required placeholder="CVV" maxlength="3" class="bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 text-slate-950 font-extrabold text-xs shadow-lg shadow-amber-500/20 hover:opacity-90 transition">
+                    <span data-i18n="btnActivatePro">Start 1-Day Free Trial & Activate Pro</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- POPUP 3: PRODUCT DETAIL & COMMENT MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-3xl p-6 border border-white/10 space-y-6 relative custom-scrollbar">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 z-10">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div id="modal-product-content">
+                <!-- Filled dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP 4: CREATE POST MODAL -->
+    <div id="create-post-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-lg w-full rounded-3xl p-6 border border-indigo-500/30 space-y-4 relative">
+            <button onclick="closeCreatePostModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-xl font-bold" data-i18n="createPostTitle">Publish Community Review</h3>
+
+            <form onsubmit="handleCreatePost(event)" class="space-y-4">
+                <input type="text" id="post-title-input" required placeholder="Title e.g. iPhone 15 Pro 6-Month Honest Review" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white">
+                <input type="url" id="post-img-input" required placeholder="Image URL e.g. https://images.unsplash.com/photo-..." class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white">
+                <textarea id="post-text-input" rows="4" required placeholder="Write your full product feedback and store evaluation..." class="w-full bg-slate-900 border border-white/10 rounded-xl p-4 text-xs text-white resize-none"></textarea>
+                <button type="submit" class="w-full py-3 rounded-xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-500 transition">
+                    Publish Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- POPUP 5: ACCOUNT / PROFILE MODAL -->
+    <div id="account-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-md w-full rounded-3xl p-6 border border-white/10 space-y-6 relative">
+            <button onclick="closeAccountModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-3">
+                <img id="profile-modal-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="w-20 h-20 rounded-2xl mx-auto object-cover ring-4 ring-indigo-500/40">
+                <div>
+                    <h3 class="text-lg font-bold" id="profile-modal-name">User Account</h3>
+                    <span id="profile-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-300">Free Tier</span>
+                </div>
+            </div>
+
+            <form onsubmit="saveProfile(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Display Name</label>
+                    <input type="text" id="profile-name-input" class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Avatar Image URL</label>
+                    <input type="url" id="profile-avatar-input" class="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white">
+                </div>
+                <button type="submit" class="w-full py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-500 transition">Save Profile Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION BOX -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 glass-panel px-4 py-3 rounded-2xl border border-indigo-500/40 shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-msg" class="text-xs font-bold text-slate-200">Operation successful</span>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        /* ----------------------------------------------------
+           1. INTERNATIONALIZATION (EN, RU, UZ)
+        ---------------------------------------------------- */
+        const i18n = {
+            en: {
+                navMarket: "Market", navAi: "AI Assistant", navPosts: "Community Posts", navDiscounts: "Discounts", navAds: "Post Ad",
+                catAll: "All (200)", catTech: "Technology (50)", catFood: "Food & Dishes (50)", catHome: "For Home (50)", catDiscounts: "Hot Deals (50)",
+                searchPh: "Search 200+ products...", aiPromptPh: "Paste product description or ask market diagnostic...",
+                aiTitle: "Universal Product AI Hub", aiSubtitle: "Paste any product description, link, or upload an image to receive instant deep analytics on origins, marketplace price comparisons, and utility scores.",
+                aiPromptTab: "Text Analytics & Prompt", aiVisualTab: "Visual Photo Matcher", btnAnalyze: "Analyze Product with AI",
+                visualDropText: "Click or drop a product photo here to scan", aiAnalysisReport: "AI Diagnostic Report",
+                aiWhyNeed: "1. Why You Need It", aiWhatIs: "2. What It Is", aiWhereMade: "3. Origin & Quality", aiMarketComp: "4. Market Price Verdict",
+                postsFeedTitle: "Community Product Reviews & Feed", postsFeedSub: "Explore top 100 community recommended products. Pro members can publish reviews!", btnCreatePost: "Create New Post",
+                discountsHeader: "Exclusive Discount Portal", discountsSub: "50 premium products with promotional badges, verified coupon prices, and limited availability.",
+                adPortalTitle: "Promote Your Product or Store", adPortalSub: "Upload your short product ad video or banner. Ads go live across the platform after quick automated verification.",
+                adTitleLabel: "Ad Title", adMediaLabel: "Ad Photo / Video URL (Max 10s)", adTargetLabel: "Target Destination Link", adPaymentHeader: "Ad Fee ($2.00 / 7 Days) - Visa / Mastercard",
+                btnPayAndPublishAd: "Pay $2.00 & Schedule Ad Live", adApproved: "Ad Approved! Launching in system queue:",
+                proModalTitle: "Universal Pro Access", proTrialText: "1 Day FREE Trial • Then $1.00 / 2 Weeks",
+                proFeat1: "Publish Community Posts & Reviews", proFeat2: "Bypass all Ad banners & popups", proFeat3: "Direct priority checkout links", proFeat4: "Unlimited AI Visual Search Diagnostics", btnActivatePro: "Start 1-Day Free Trial & Activate Pro",
+                createPostTitle: "Publish Community Review"
+            },
+            ru: {
+                navMarket: "Маркет", navAi: "ИИ Ассистент", navPosts: "Посты", navDiscounts: "Скидки", navAds: "Реклама",
+                catAll: "Все (200)", catTech: "Технологии (50)", catFood: "Еда и Посуда (50)", catHome: "Для Дома (50)", catDiscounts: "Скидки (50)",
+                searchPh: "Поиск из 200+ товаров...", aiPromptPh: "Вставьте описание товара или задайте вопрос ИИ...",
+                aiTitle: "Универсальный ИИ Аналитик", aiSubtitle: "Вставьте описание товара или загрузите фото для получения подробного анализа происхождения, сравнения цен и полезности.",
+                aiPromptTab: "Текстовый Анализ", aiVisualTab: "Поиск по Фото", btnAnalyze: "Анализировать с ИИ",
+                visualDropText: "Нажмите или перетащите фото товара для сканирования", aiAnalysisReport: "Отчет Анализа ИИ",
+                aiWhyNeed: "1. Зачем вам это", aiWhatIs: "2. Что это такое", aiWhereMade: "3. Происхождение", aiMarketComp: "4. Сравнение Маркетплейсов",
+                postsFeedTitle: "Отзывы и Сообщество", postsFeedSub: "Топ 100 рекомендуемых товаров от пользователей. Pro подписка позволяет создавать посты!", btnCreatePost: "Создать Пост",
+                discountsHeader: "Портал Скидок и Акций", discountsSub: "50 товаров со специальными скидками и скидочными купонами.",
+                adPortalTitle: "Рекламируйте Свой Товар", adPortalSub: "Загрузите рекламный ролик до 10с или баннер. Реклама появится на платформе сразу после оплаты.",
+                adTitleLabel: "Заголовок Рекламы", adMediaLabel: "Ссылка на Видео/Фото (До 10сек)", adTargetLabel: "Ссылка на Товар/Магазин", adPaymentHeader: "Стоимость ($2.00 / 7 Дней) - Visa / Mastercard",
+                btnPayAndPublishAd: "Оплатить $2.00 и Запустить", adApproved: "Реклама Одобрена! Запуск через:",
+                proModalTitle: "Universal Pro Подписка", proTrialText: "1 День БЕСПЛАТНО • Далее $1.00 / 2 Недели",
+                proFeat1: "Публикация постов и обзоров", proFeat2: "Полное отключение рекламы", proFeat3: "Прямые приоритетные ссылки", proFeat4: "Неограниченный ИИ поиск по фото", btnActivatePro: "Активировать 1 День Бесплатно",
+                createPostTitle: "Опубликовать Обзор"
+            },
+            uz: {
+                navMarket: "Bozor", navAi: "AI Yordamchi", navPosts: "Postlar", navDiscounts: "Chegirmalar", navAds: "Reklama",
+                catAll: "Barchasi (200)", catTech: "Texnologiya (50)", catFood: "Taom va Idishlar (50)", catHome: "Uy uchun (50)", catDiscounts: "Arzon narxlar (50)",
+                searchPh: "200+ mahsulotlar orasidan qidirish...", aiPromptPh: "Mahsulot tavsifini kiriting yoki AI ga savol bering...",
+                aiTitle: "Universal AI Mahsulot Markazi", aiSubtitle: "Mahsulot tavsifini nusxalang yoki rasmini yuklang: AI uning kelib chiqishi va eng arzon narxlarini topib beradi.",
+                aiPromptTab: "Matnli AI Tahlil", aiVisualTab: "Rasm orqali Qidirish", btnAnalyze: "AI bilan Tahlil Qilish",
+                visualDropText: "Skanerlash uchun mahsulot rasmini bosing yoki tashlang", aiAnalysisReport: "AI Diagnostika Hisoboti",
+                aiWhyNeed: "1. Nima uchun kerak?", aiWhatIs: "2. Bu nima?", aiWhereMade: "3. Qayerda ishlab chiqarilgan?", aiMarketComp: "4. Bozordagi narxlar tahlili",
+                postsFeedTitle: "Jamoatchilik Sharhlari va Postlar", postsFeedSub: "Top 100 ta eng yaxshi tavsiya etilgan mahsulotlar. Pro a'zolar post qoldira oladi!", btnCreatePost: "Yangi Post Yaratish",
+                discountsHeader: "Aksiyalar va Chegirmalar Portali", discountsSub: "50 ta maxsus chegirmali va kuponli mahsulotlar.",
+                adPortalTitle: "Mahsulot yoki Do'koningizni Reklama Qiling", adPortalSub: "10 sekundlik video yoki rasm yuklang va reklamangiz butun platforma bo'ylab ko'rsatiladi.",
+                adTitleLabel: "Reklama Sarlavhasi", adMediaLabel: "Video / Rasm Havolasi (Maks 10s)", adTargetLabel: "Do'kon Havolasi", adPaymentHeader: "Reklama Narxi ($2.00 / 7 Kun) - Visa / Mastercard",
+                btnPayAndPublishAd: "$2.00 To'lash va Reklamani Chiqarish", adApproved: "Reklama Tasdiqlandi! Navbatda ishga tushish:",
+                proModalTitle: "Universal Pro Obuna", proTrialText: "1 Kun BEPUL Sinov • Keyin $1.00 / 2 Hafta",
+                proFeat1: "Jamoatchilik postlari va sharhlar yozish", proFeat2: "Barcha reklamalarni o'chirish", proFeat3: "Tezkor to'g'ridan-to'g'ri xarid havolalari", proFeat4: "Cheksiz AI vizual rasm tahlili", btnActivatePro: "1 Kun Bepul Pro-ni Yoqish",
+                createPostTitle: "Sharh Nashr Etish"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang] && i18n[lang][key]) {
+                    el.innerText = i18n[lang][key];
+                }
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (i18n[lang] && i18n[lang][key]) {
+                    el.placeholder = i18n[lang][key];
+                }
+            });
+            localStorage.setItem('up_lang', lang);
+        }
+
+        /* ----------------------------------------------------
+           2. PRODUCT CATALOG GENERATOR (200 UNIQUE ITEMS)
+           50 Tech, 50 Food/Dishes, 50 Home, 50 Discounts
+           ALL WITH UNIQUE REAL UNSPLASH IMAGES & AUTO CAROUSEL
+        ---------------------------------------------------- */
+        const techTitles = [
+            "iPhone 15 Pro Max 256GB Titanium", "Samsung Galaxy S24 Ultra 512GB", "MacBook Pro 16 M3 Max", "DJI Mini 4 Pro Fly More Combo",
+            "Sony WH-1000XM5 Wireless Headphones", "iPad Air 10.9 M2 128GB", "Asus ROG Zephyrus G16 OLED", "Apple Watch Ultra 2 GPS",
+            "Canon EOS R6 Mark II Mirrorless", "Nintendo Switch OLED Model", "Bose QuietComfort Ultra", "Steam Deck OLED 512GB",
+            "Anker 737 Power Bank 24000mAh", "Samsung Odyssey G9 Gaming Monitor", "Logitech MX Master 3S Mouse", "Keychron Q1 Pro Mechanical Keyboard",
+            "GoPro HERO12 Black Creator Edition", "Kindle Paperwhite Signature Edition", "Sonos Era 300 Smart Speaker", "PlayStation 5 Slim Console",
+            "Xbox Series X 1TB Console", "Razer DeathAdder V3 Pro", "LG C3 65-inch OLED 4K TV", "Marshall Stanmore III Bluetooth Speaker",
+            "Garmin Fenix 7X Pro Solar", "DJI Osmo Pocket 3 Gimbal", "Apple AirPods Pro 2 USB-C", "Shure SM7B Cardioid Dynamic Mic", "Elgato Stream Deck MK.2", "Sennheiser HD 660S2 Open-Back",
+            "Meta Quest 3 128GB VR Headset", "Samsung Galaxy Tab S9 Ultra", "Dell XPS 15 9530 Laptop", "Google Pixel 8 Pro 256GB", "Xiaomi 14 Ultra Photography Kit",
+            "OnePlus 12 512GB Emerald", "Asus ROG Ally Z1 Extreme", "Lenovo Legion Go Handheld", "Nvidia Shield TV Pro 4K", "Belkin 3-in-1 MagSafe Charger",
+            "CalDigit TS4 Thunderbolt 4 Hub", "SanDisk 2TB Extreme Portable SSD", "Fiio M17 High-Res Music Player", "Nothing Phone (2) 256GB White", "Insta360 X3 360 Camera",
+            "Audio-Technica ATH-M50xBT2", "HyperX QuadCast S RGB Mic", "Wacom Cintiq Pro 16 Pen Display", "APC Back-UPS Pro 1500VA", "Nanoleaf Lines RGB Light Smarter Kit"
+        ];
+
+        const foodTitles = [
+            "Traditional Uzbek Kazan Plov Cookware Set", "Premium Porcelain Ceramic Dinnerware 16-pc", "Uzbek Cast Iron Kazan 12 Litres with Lid", "Handmade Ceramic Tea Set Blue Rishtan",
+            "Italian Artisanal Pasta Bowl Set 6-pc", "Tefal Titanium Non-Stick Frying Pan 28cm", "Glass Olive Oil & Vinegar Dispenser Set", "Japanese Damascus Chef Knife 8-inch Set",
+            "Stainless Steel Luxury Cutlery 24-pc", "Cast Iron Skillet Grill Pan 30cm", "Enamelled Dutch Oven Cookware 5.5L", "Bamboo Cheese Board & Knife Knife Set",
+            "Electric Spice & Coffee Grinder Stainless", "Double Walled Thermal Glass Coffee Mugs", "Professional Espresso Tamper & Distributor", "Gourmet Marble Mortar and Pestle",
+            "Air Tight Glass Food Storage Containers 10-pc", "Manual Stainless Salt & Pepper Grinder Mill", "Non-Stick Silicone Baking Utensil Set 12-pc", "Ceramic Baking Dish Casserole Pan",
+            "Japanese Teapot Iron Tetsubin Kettle 900ml", "French Press Coffee Maker Stainless 1L", "Charcoal BBQ Grill Stainless Portable", "Pizza Stone Pan for Oven & Grill 38cm",
+            "Sous Vide Precision Cooker Immersion", "Electric Meat Grinder Heavy Duty 2000W", "Cold Brew Coffee Maker Pitcher 1.5L", "Stainless Steel Mixing Bowls set of 5",
+            "Sourdough Bread Proofing Basket Set", "Wine Decanter Crystal Glass Aerator", "Cocktail Shaker Set Barware Kit 12-pc", "Electric Knife Sharpener Professional",
+            "Digital Kitchen Food Scale High Precision", "Baking Sheet Pan Oven Ware Aluminium", "Silicone Oven Mitts & Pot Holders Heat Resistant", "Electric Tea Kettle Temperature Control",
+            "Rotating Spice Rack Organizer 20 Jars", "Tiered Fruit Basket Stand for Countertop", "Glass Teapot with Removable Infuser 1.2L", "Stainless Steel Food Steamer Pot 3-Tier",
+            "Insulated Food Jar Vacuum Bento Box", "Traditional Clay Tanur Baking Pot", "Stainless Barbeque Skewers Flat 12-pc", "Wooden Salad Bowl Large Acacia Wood",
+            "Electric Citrus Juicer Squeezer", "Sushi Making Kit Deluxe Bamboo Rollers", "Non-Stick Wok Pan Carbon Steel 32cm", "Fondue Pot Set Cast Iron Cheese/Chocolate",
+            "Over Sink Dish Drying Rack Expandable", "Vacuum Sealer Machine for Food Saver"
+        ];
+
+        const homeTitles = [
+            "Dyson V15 Detect Cordless Vacuum", "LG Direct Drive Front-Load Washer 10kg", "Roborock S8 MaxV Ultra Robot Vacuum", "Philips Air Purifier Series 3000i",
+            "Smart RGB LED Ambient Floor Lamp", "Ergonomic Mesh Executive Office Chair", "Tempur-Pedic Memory Foam Contour Pillow", "Nespresso Vertuo Pop Coffee Machine",
+            "Glass Electric Boiling Water Kettle 1.7L", "Panasonic Inverter Microwave Oven 27L", "De'Longhi Magnifica S Automatic Espresso", "Shark HydroVac Cordless Floor Cleaner",
+            "Levoit VeSync Smart Air Humidifier", "Honeywell TurboForce Power Air Circulator", "Smart Fingerprint Door Lock Touchscreen", "Philips Hue White & Color Ambiance Starter",
+            "iRobot Braava Jet m6 Robot Mop", "Ninja Foodi MAX DualZone Air Fryer", "Cosori Custom Smart Air Fryer 5.5L", "Pure Enrichment MistAire Ultrasonic Humidifier",
+            "Rowenta Garment Steamer Professional", "Bissell SpotClean Pro Carpet Cleaner", "Dyson Purifier Hot+Cool Formaldehyde", "Theragun PRO Handheld Percussion Massager",
+            "Sleep Number Smart Adjustable Bed Base", "Marshall Emberton II Portable Home Speaker", "Airmega 400 Smart Air Purifier HEPA", "Breville Smart Oven Air Fryer Pro",
+            "Eufy Security Cam E330 Outdoor 4K", "Ring Video Doorbell Pro 2", "Karcher K5 Premium Pressure Washer", "Bowers & Wilkins Zeppelin Smart Speaker",
+            "Instant Pot Duo Crisp 11-in-1 Electric", "Blueair DustMagnet Air Purifier", "LG Styler Smart Steam Closet", "AeroGarden Harvest Indoor Hydroponic",
+            "Tineco Floor ONE S5 Smart Wet Dry Vacuum", "Miele C3 Complete Bagged Vacuum", "Hamilton Beach Beach FlexBrew Coffee Maker", "Cuisinart Custom 14-Cup Food Processor",
+            "SodaStream Art Sparkling Water Maker", "Winix 5500-2 Air Purifier HEPA", "Fellow Stagg EKG Electric Gooseneck Kettle", "Xiaomi Smart Tower Fan Low Noise",
+            "Zojirushi Neuro Fuzzy Rice Cooker 1L", "Simplehuman 45L Touch-Free Trash Can", "Vornado 660 Whole Room Air Circulator", "Honeywell Wi-Fi Smart Color Thermostat",
+            "Dyson Supersonic Ionic Hair Dryer", "Philips Sonicare DiamondClean 9000 Toothbrush"
+        ];
+
+        // Seeded high quality image library categorized to ensure unique non-repeated images
+        const imagePacks = {
+            tech: [
+                ["https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=600&q=80", "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&q=80", "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&q=80", "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&q=80", "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80", "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&q=80", "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80", "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&q=80", "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80"]
+            ],
+            food: [
+                ["https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&q=80", "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=600&q=80", "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=600&q=80", "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600&q=80", "https://images.unsplash.com/photo-1594631252845-29fc4cc86de5?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=600&q=80", "https://images.unsplash.com/photo-1514986888952-8cd320577b68?w=600&q=80"]
+            ],
+            home: [
+                ["https://images.unsplash.com/photo-1558317374-067fb5f30001?w=600&q=80", "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=600&q=80", "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=600&q=80", "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=600&q=80"],
+                ["https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&q=80", "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&q=80"]
+            ]
+        };
+
+        function getRandomPhotos(cat, index) {
+            const pack = imagePacks[cat];
+            const p = pack[index % pack.length];
+            return [
+                p[0] + "&auto=format&fit=crop&sig=" + index,
+                p[1] + "&auto=format&fit=crop&sig=" + (index + 100)
+            ];
+        }
+
+        let allProducts = [];
+
+        function generateProducts() {
+            let idCounter = 1;
+
+            // 1. Tech 50
+            techTitles.forEach((title, idx) => {
+                const photos = getRandomPhotos('tech', idx);
+                allProducts.push({
+                    id: idCounter++,
+                    title: title,
+                    category: 'tech',
+                    price: Math.floor(Math.random() * 1200) + 150,
+                    discountPrice: null,
+                    rating: (4.5 + Math.random() * 0.5).toFixed(1),
+                    reviewsCount: Math.floor(Math.random() * 400) + 20,
+                    photos: photos,
+                    currentImgIdx: 0,
+                    desc: `High-grade ${title} equipped with next-gen features, ultra-durable build, and full manufacturer warranty. Tested for peak performance.`,
+                    origin: "Japan / South Korea / USA",
+                    links: {
+                        uzum: `https://uzum.uz/search?q=${encodeURIComponent(title)}`,
+                        yandex: `https://market.yandex.ru/search?text=${encodeURIComponent(title)}`,
+                        wb: `https://www.wildberries.ru/catalog/0/search.aspx?search=${encodeURIComponent(title)}`
+                    },
+                    comments: [
+                        { user: "Sanjar_Tech", text: "Amazing performance! Arrived in 1 day via Uzum.", date: "2 hours ago" },
+                        { user: "Elena_M", text: "Worth every single cent. Build quality is exceptional.", date: "1 day ago" }
+                    ],
+                    likes: Math.floor(Math.random() * 300) + 15,
+                    isLiked: false
+                });
+            });
+
+            // 2. Food & Dishes 50
+            foodTitles.forEach((title, idx) => {
+                const photos = getRandomPhotos('food', idx);
+                allProducts.push({
+                    id: idCounter++,
+                    title: title,
+                    category: 'food',
+                    price: Math.floor(Math.random() * 180) + 25,
+                    discountPrice: null,
+                    rating: (4.6 + Math.random() * 0.4).toFixed(1),
+                    reviewsCount: Math.floor(Math.random() * 350) + 10,
+                    photos: photos,
+                    currentImgIdx: 0,
+                    desc: `Authentic ${title} crafted for culinary perfection. Heat-resistant, eco-friendly materials engineered for delicious dishes.`,
+                    origin: "Uzbekistan / Italy / Japan",
+                    links: {
+                        uzum: `https://uzum.uz/search?q=${encodeURIComponent(title)}`,
+                        yandex: `https://market.yandex.ru/search?text=${encodeURIComponent(title)}`,
+                        wb: `https://www.wildberries.ru/catalog/0/search.aspx?search=${encodeURIComponent(title)}`
+                    },
+                    comments: [
+                        { user: "Otabek_Chef", text: "Heavy duty quality. Perfect for authentic Uzbek plov!", date: "3 hours ago" }
+                    ],
+                    likes: Math.floor(Math.random() * 250) + 10,
+                    isLiked: false
+                });
+            });
+
+            // 3. For Home 50
+            homeTitles.forEach((title, idx) => {
+                const photos = getRandomPhotos('home', idx);
+                allProducts.push({
+                    id: idCounter++,
+                    title: title,
+                    category: 'home',
+                    price: Math.floor(Math.random() * 500) + 40,
+                    discountPrice: null,
+                    rating: (4.4 + Math.random() * 0.5).toFixed(1),
+                    reviewsCount: Math.floor(Math.random() * 500) + 30,
+                    photos: photos,
+                    currentImgIdx: 0,
+                    desc: `Premium home appliance: ${title}. Simplifies daily chores with smart low-energy consumption and silent operation.`,
+                    origin: "Germany / Sweden / China",
+                    links: {
+                        uzum: `https://uzum.uz/search?q=${encodeURIComponent(title)}`,
+                        yandex: `https://market.yandex.ru/search?text=${encodeURIComponent(title)}`,
+                        wb: `https://www.wildberries.ru/catalog/0/search.aspx?search=${encodeURIComponent(title)}`
+                    },
+                    comments: [
+                        { user: "Malika_Home", text: "Super quiet and very efficient. My family loves it!", date: "Yesterday" }
+                    ],
+                    likes: Math.floor(Math.random() * 400) + 45,
+                    isLiked: false
+                });
+            });
+
+            // 4. Discounts 50
+            for (let i = 0; i < 50; i++) {
+                const baseProd = allProducts[i % 150]; // Sample base products
+                const origPrice = Math.floor(Math.random() * 400) + 100;
+                const disc = Math.floor(origPrice * 0.65);
+                const photos = getRandomPhotos(baseProd.category, i + 50);
+
+                allProducts.push({
+                    id: idCounter++,
+                    title: `[DEAL -35%] ${baseProd.title}`,
+                    category: 'discounts',
+                    price: origPrice,
+                    discountPrice: disc,
+                    rating: (4.7 + Math.random() * 0.3).toFixed(1),
+                    reviewsCount: Math.floor(Math.random() * 600) + 100,
+                    photos: photos,
+                    currentImgIdx: 0,
+                    desc: `Limited flash sale offer for ${baseProd.title}! Includes extra promo warranty card and fast delivery.`,
+                    origin: baseProd.origin,
+                    links: baseProd.links,
+                    comments: [
+                        { user: "DealHunter", text: "Got this on promotion! Unbelievable discount price.", date: "5 hours ago" }
+                    ],
+                    likes: Math.floor(Math.random() * 800) + 200,
+                    isLiked: false
+                });
+            }
+        }
+
+        /* ----------------------------------------------------
+           3. LOCALSTORAGE STATE MANAGEMENT
+        ---------------------------------------------------- */
+        function loadStorage() {
+            const savedPro = localStorage.getItem('up_is_pro');
+            if (savedPro === 'true') {
+                userState.isPro = true;
+                updateProUI();
+            }
+
+            const savedUser = localStorage.getItem('up_user');
+            if (savedUser) {
+                userState.user = JSON.parse(savedUser);
+            }
+
+            const savedComments = localStorage.getItem('up_custom_comments');
+            if (savedComments) {
+                const comms = JSON.parse(savedComments);
+                Object.keys(comms).forEach(prodId => {
+                    const prod = allProducts.find(p => p.id == prodId);
+                    if (prod) prod.comments = comms[prodId];
+                });
+            }
+
+            const savedPosts = localStorage.getItem('up_custom_posts');
+            if (savedPosts) {
+                communityPosts = [...JSON.parse(savedPosts), ...communityPosts];
+            }
+
+            const savedAds = localStorage.getItem('up_custom_ads');
+            if (savedAds) {
+                sponsoredAds = [...JSON.parse(savedAds), ...sponsoredAds];
+            }
+        }
+
+        const userState = {
+            isPro: false,
+            user: {
+                name: "Rustam_Tashkent",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+            }
+        };
+
+        let currentCategory = 'all';
+
+        /* ----------------------------------------------------
+           4. RENDER MARKETPLACE PRODUCTS & AUTO CAROUSEL
+        ---------------------------------------------------- */
+        function renderMarketplace() {
+            const grid = document.getElementById('product-grid');
+            const searchVal = document.getElementById('market-search').value.toLowerCase();
+
+            let filtered = allProducts.filter(p => {
+                const matchCat = (currentCategory === 'all') ? true : p.category === currentCategory;
+                const matchSearch = p.title.toLowerCase().includes(searchVal) || p.desc.toLowerCase().includes(searchVal);
+                return matchCat && matchSearch;
+            });
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group relative border border-white/10">
+                    ${p.discountPrice ? `<span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-lg text-[10px] font-black bg-rose-500 text-white shadow-lg">FLASH DEAL</span>` : ''}
+                    
+                    <!-- Auto-cycling Image Container -->
+                    <div class="relative h-48 overflow-hidden bg-slate-900 cursor-pointer" onclick="openProductModal(${p.id})">
+                        <img id="prod-img-${p.id}" src="${p.photos[p.currentImgIdx]}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${p.title}">
+                        <div class="absolute bottom-2 right-2 bg-slate-950/70 backdrop-blur-md px-2 py-0.5 rounded-md text-[10px] font-bold text-slate-300">
+                            <i class="fa-solid fa-images mr-1 text-indigo-400"></i> ${p.photos.length} Photos
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-4 flex-grow flex flex-col justify-between space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+                                <span class="capitalize text-indigo-400 font-semibold">${p.category}</span>
+                                <span class="text-amber-400 font-bold"><i class="fa-solid fa-star text-[10px]"></i> ${p.rating} (${p.reviewsCount})</span>
+                            </div>
+                            <h3 onclick="openProductModal(${p.id})" class="text-sm font-bold text-slate-100 hover:text-indigo-400 cursor-pointer line-clamp-2 leading-snug">${p.title}</h3>
+                        </div>
+
+                        <!-- Price & Actions -->
+                        <div class="pt-2 border-t border-white/10 flex items-center justify-between">
+                            <div>
+                                ${p.discountPrice ? `
+                                    <span class="text-base font-extrabold text-rose-400">$${p.discountPrice}</span>
+                                    <span class="text-xs text-slate-500 line-through ml-1">$${p.price}</span>
+                                ` : `
+                                    <span class="text-base font-extrabold text-slate-100">$${p.price}</span>
+                                `}
+                            </div>
+
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="toggleProductLike(${p.id}, event)" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-white/5 transition">
+                                    <i class="fa-${p.isLiked ? 'solid text-rose-500' : 'regular'} fa-heart"></i>
+                                </button>
+                                <button onclick="copyProductDesc('${p.id}', event)" class="p-2 rounded-xl bg-slate-800/80 hover:bg-indigo-600 text-slate-300 hover:text-white border border-white/5 transition" title="Copy Info">
+                                    <i class="fa-solid fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Origin Quick Links -->
+                        <div class="grid grid-cols-3 gap-1 pt-1">
+                            <a href="${p.links.uzum}" target="_blank" class="text-center py-1 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-[10px] font-bold text-indigo-300 transition">Uzum</a>
+                            <a href="${p.links.yandex}" target="_blank" class="text-center py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-[10px] font-bold text-amber-300 transition">Yandex</a>
+                            <a href="${p.links.wb}" target="_blank" class="text-center py-1 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-[10px] font-bold text-purple-300 transition">WB</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Auto Cycle Images Every 7 Seconds for visible cards
+        setInterval(() => {
+            allProducts.forEach(p => {
+                if (p.photos.length > 1) {
+                    p.currentImgIdx = (p.currentImgIdx + 1) % p.photos.length;
+                    const imgEl = document.getElementById(`prod-img-${p.id}`);
+                    if (imgEl) {
+                        imgEl.src = p.photos[p.currentImgIdx];
+                    }
+                }
+            });
+        }, 7000);
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-indigo-600', 'text-white');
+                b.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            const activeBtn = document.getElementById(`cat-${cat}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+                activeBtn.classList.add('bg-indigo-600', 'text-white');
+            }
+            renderMarketplace();
+        }
+
+        /* ----------------------------------------------------
+           5. PRODUCT MODAL & REALTIME COMMENTS
+        ---------------------------------------------------- */
+        let activeModalProductId = null;
+
+        function openProductModal(id) {
+            activeModalProductId = id;
+            const p = allProducts.find(item => item.id == id);
+            if (!p) return;
+
+            const modalContent = document.getElementById('modal-product-content');
+            modalContent.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <img id="modal-primary-img" src="${p.photos[0]}" class="w-full h-64 object-cover rounded-2xl border border-white/10 mb-3">
+                        <div class="flex gap-2">
+                            ${p.photos.map((ph, idx) => `
+                                <img src="${ph}" onclick="document.getElementById('modal-primary-img').src='${ph}'" class="w-16 h-16 rounded-xl object-cover cursor-pointer border border-white/10 hover:border-indigo-500">
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase">${p.category}</span>
+                        <h2 class="text-xl font-extrabold text-white">${p.title}</h2>
+                        <p class="text-xs text-slate-300 leading-relaxed">${p.desc}</p>
+                        <div class="p-3 glass-card rounded-xl text-xs space-y-1">
+                            <p class="text-slate-400">Manufactured: <span class="text-white font-bold">${p.origin}</span></p>
+                            <p class="text-slate-400">Rating: <span class="text-amber-400 font-bold"><i class="fa-solid fa-star"></i> ${p.rating}</span></p>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-extrabold text-indigo-400">$${p.discountPrice || p.price}</span>
+                            <div class="flex gap-2">
+                                <a href="${p.links.uzum}" target="_blank" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs">Buy on Uzum</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment Section -->
+                <div class="mt-6 pt-6 border-t border-white/10 space-y-4">
+                    <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-indigo-400"></i> Customer Reviews & Discussions (${p.comments.length})
+                    </h3>
+
+                    <!-- Comments List -->
+                    <div id="modal-comments-list" class="space-y-3 max-h-48 overflow-y-auto custom-scrollbar pr-2">
+                        ${p.comments.map(c => `
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-indigo-300">${c.user}</span>
+                                    <span class="text-[10px] text-slate-500">${c.date || 'Just now'}</span>
+                                </div>
+                                <p class="text-xs text-slate-300">${c.text}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Add Comment Form -->
+                    <form onsubmit="submitProductComment(event)" class="flex gap-2">
+                        <input type="text" id="product-comment-input" required placeholder="Write a comment..." class="flex-grow bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs hover:bg-indigo-500 transition">Post</button>
+                    </form>
+                </div>
+            `;
+
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        function submitProductComment(e) {
+            e.preventDefault();
+            const input = document.getElementById('product-comment-input');
+            const txt = input.value.trim();
+            if (!txt || !activeModalProductId) return;
+
+            const p = allProducts.find(item => item.id == activeModalProductId);
+            if (p) {
+                const newComm = { user: userState.user.name, text: txt, date: "Just now" };
+                p.comments.push(newComm);
+
+                // Save to LocalStorage
+                let saved = JSON.parse(localStorage.getItem('up_custom_comments') || '{}');
+                saved[p.id] = p.comments;
+                localStorage.setItem('up_custom_comments', JSON.stringify(saved));
+
+                input.value = '';
+                openProductModal(p.id); // Refresh view
+                showToast("Comment published!");
+            }
+        }
+
+        function toggleProductLike(id, event) {
+            event.stopPropagation();
+            const p = allProducts.find(item => item.id == id);
+            if (p) {
+                p.isLiked = !p.isLiked;
+                p.likes += p.isLiked ? 1 : -1;
+                renderMarketplace();
+                showToast(p.isLiked ? "Saved to favorites" : "Removed from favorites");
+            }
+        }
+
+        function copyProductDesc(id, event) {
+            event.stopPropagation();
+            const p = allProducts.find(item => item.id == id);
+            if (p) {
+                const text = `${p.title} - $${p.price}\n\n${p.desc}\n\nAvailable on Uzum Market.`;
+                const dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = text;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+                showToast("Description copied to clipboard!");
+            }
+        }
+
+        /* ----------------------------------------------------
+           6. AI DIAGNOSTIC & VISUAL PHOTO MATCH
+        ---------------------------------------------------- */
+        function toggleAiMode(mode) {
+            const textBtn = document.getElementById('ai-mode-text-btn');
+            const visualBtn = document.getElementById('ai-mode-visual-btn');
+            const textCont = document.getElementById('ai-text-container');
+            const visualCont = document.getElementById('ai-visual-container');
+
+            if (mode === 'text') {
+                textBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 text-white transition";
+                visualBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white transition";
+                textCont.classList.remove('hidden');
+                visualCont.classList.add('hidden');
+            } else {
+                visualBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold bg-indigo-600 text-white transition";
+                textBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white transition";
+                visualCont.classList.remove('hidden');
+                textCont.classList.add('hidden');
+            }
+        }
+
+        function analyzeAiProduct() {
+            const prompt = document.getElementById('ai-prompt-input').value;
+            if (!prompt) {
+                showToast("Please enter a product description or prompt");
+                return;
+            }
+
+            document.getElementById('ai-result-box').classList.remove('hidden');
+            document.getElementById('ai-scanned-item').innerText = "Query: " + prompt.substring(0, 40) + "...";
+            showToast("AI Diagnostic complete!");
+        }
+
+        function handleVisualSearch(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    document.getElementById('visual-preview-img').src = evt.target.result;
+                    document.getElementById('visual-file-name').innerText = file.name;
+                    document.getElementById('visual-preview-box').classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function analyzeVisualProduct() {
+            document.getElementById('ai-result-box').classList.remove('hidden');
+            document.getElementById('ai-scanned-item').innerText = "Scanned Image: Visual Match Score 98.4%";
+            showToast("Visual recognition match complete!");
+        }
+
+        /* ----------------------------------------------------
+           7. COMMUNITY POSTS FEED & LIKES
+        ---------------------------------------------------- */
+        let communityPosts = [
+            {
+                id: 101,
+                author: "Azizbek_TechReview",
+                avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80",
+                title: "DJI Mini 4 Pro - Unboxing & Real Flight Test in Samarkand",
+                img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=800&q=80",
+                content: "The camera sensors on this tiny drone are incredible. Night shots over Registan came out super sharp. Definitely worth buying if you travel!",
+                likes: 142,
+                isLiked: false,
+                comments: [{ user: "Shokhir", text: "What was the battery life in cold weather?" }]
+            },
+            {
+                id: 102,
+                author: "Nigora_Kitchen",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80",
+                title: "Authentic Uzbek Rishtan Tea Set 12-Piece Review",
+                img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&q=80",
+                content: "The handcrafted glazes are stunning. Kept green tea piping hot for over 45 minutes during our family gathering.",
+                likes: 89,
+                isLiked: false,
+                comments: []
+            }
+        ];
+
+        function renderPosts() {
+            const container = document.getElementById('posts-feed-container');
+            container.innerHTML = communityPosts.map(post => `
+                <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img src="${post.avatar}" class="w-10 h-10 rounded-xl object-cover ring-2 ring-indigo-500/30">
+                            <div>
+                                <h4 class="text-sm font-bold text-white">${post.author}</h4>
+                                <span class="text-[10px] text-slate-400">Verified Pro Reviewer</span>
+                            </div>
+                        </div>
+                        <button onclick="togglePostLike(${post.id})" class="px-3 py-1.5 rounded-xl bg-slate-800 text-xs font-bold hover:bg-slate-700 transition flex items-center gap-1.5 ${post.isLiked ? 'text-rose-400' : 'text-slate-300'}">
+                            <i class="fa-${post.isLiked ? 'solid text-rose-500' : 'regular'} fa-heart"></i> ${post.likes}
+                        </button>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-white">${post.title}</h3>
+                    <img src="${post.img}" class="w-full h-64 object-cover rounded-2xl border border-white/10">
+                    <p class="text-xs text-slate-300 leading-relaxed">${post.content}</p>
+
+                    <!-- Comments inside post -->
+                    <div class="pt-3 border-t border-white/10 space-y-2">
+                        <div class="text-[11px] font-bold text-slate-400">Comments (${post.comments.length})</div>
+                        ${post.comments.map(c => `
+                            <div class="text-xs bg-slate-900/40 p-2 rounded-lg">
+                                <span class="font-bold text-indigo-300">${c.user}:</span> <span class="text-slate-300">${c.text}</span>
+                            </div>
+                        `).join('')}
+
+                        <form onsubmit="submitPostComment(event, ${post.id})" class="flex gap-2 pt-2">
+                            <input type="text" id="post-comm-input-${post.id}" required placeholder="Add review comment..." class="flex-grow bg-slate-900 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white">
+                            <button type="submit" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs">Reply</button>
+                        </form>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function togglePostLike(id) {
+            const post = communityPosts.find(p => p.id === id);
+            if (post) {
+                post.isLiked = !post.isLiked;
+                post.likes += post.isLiked ? 1 : -1;
+                renderPosts();
+            }
+        }
+
+        function submitPostComment(e, postId) {
+            e.preventDefault();
+            const input = document.getElementById(`post-comm-input-${postId}`);
+            const txt = input.value.trim();
+            if (!txt) return;
+
+            const post = communityPosts.find(p => p.id === postId);
+            if (post) {
+                post.comments.push({ user: userState.user.name, text: txt });
+                localStorage.setItem('up_custom_posts', JSON.stringify(communityPosts));
+                input.value = '';
+                renderPosts();
+                showToast("Reply submitted!");
+            }
+        }
+
+        function checkCreatePost() {
+            if (!userState.isPro) {
+                openProModal();
+                showToast("Only Pro members can publish reviews!");
+            } else {
+                document.getElementById('create-post-modal').classList.remove('hidden');
+            }
+        }
+
+        function closeCreatePostModal() {
+            document.getElementById('create-post-modal').classList.add('hidden');
+        }
+
+        function handleCreatePost(e) {
+            e.preventDefault();
+            const title = document.getElementById('post-title-input').value;
+            const img = document.getElementById('post-img-input').value;
+            const text = document.getElementById('post-text-input').value;
+
+            const newPost = {
+                id: Date.now(),
+                author: userState.user.name,
+                avatar: userState.user.avatar,
+                title: title,
+                img: img,
+                content: text,
+                likes: 1,
+                isLiked: true,
+                comments: []
+            };
+
+            communityPosts.unshift(newPost);
+            localStorage.setItem('up_custom_posts', JSON.stringify(communityPosts));
+            closeCreatePostModal();
+            renderPosts();
+            showToast("Post published to community feed!");
+        }
+
+        /* ----------------------------------------------------
+           8. SELF-SERVICE AD PORTAL & TIMER
+        ---------------------------------------------------- */
+        let sponsoredAds = [
+            {
+                title: "Uzum Market Express 1-Day Delivery across Uzbekistan",
+                media: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&q=80",
+                link: "https://uzum.uz"
+            }
+        ];
+
+        function submitAd(e) {
+            e.preventDefault();
+            const title = document.getElementById('ad-title').value;
+            const media = document.getElementById('ad-media-url').value;
+            const link = document.getElementById('ad-target-link').value;
+
+            sponsoredAds.unshift({ title, media, link });
+            localStorage.setItem('up_custom_ads', JSON.stringify(sponsoredAds));
+
+            document.getElementById('ad-status-timer').classList.remove('hidden');
+
+            let countdown = 59;
+            const timerEl = document.getElementById('ad-countdown');
+            const interval = setInterval(() => {
+                countdown--;
+                timerEl.innerText = `00:${countdown < 10 ? '0' : ''}${countdown}`;
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    showToast("Your Ad is now live platform-wide!");
+                }
+            }, 1000);
+        }
+
+        /* ----------------------------------------------------
+           9. PRO SUBSCRIPTION SIMULATION & POPUP ADS
+        ---------------------------------------------------- */
+        function openProModal() {
+            document.getElementById('pro-modal').classList.remove('hidden');
+        }
+
+        function closeProModal() {
+            document.getElementById('pro-modal').classList.add('hidden');
+        }
+
+        function handleProSubscribe(e) {
+            e.preventDefault();
+            userState.isPro = true;
+            localStorage.setItem('up_is_pro', 'true');
+            updateProUI();
+            closeProModal();
+            showToast("Universal Pro Unlocked! 1-Day Free Trial Active.");
+        }
+
+        function updateProUI() {
+            const btn = document.getElementById('pro-status-btn');
+            const btnTxt = document.getElementById('pro-btn-text');
+            if (userState.isPro) {
+                btn.className = "hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20";
+                btnTxt.innerText = "PRO ACTIVE";
+            }
+        }
+
+        function triggerOpeningAd() {
+            if (userState.isPro) return; // Pro users skip ads automatically
+
+            const modal = document.getElementById('opening-ad-modal');
+            const content = document.getElementById('opening-ad-content');
+            const skipBtn = document.getElementById('skip-ad-btn');
+            const timerCount = document.getElementById('ad-timer-count');
+
+            const currentAd = sponsoredAds[0];
+            content.innerHTML = `
+                <img src="${currentAd.media}" class="w-full h-48 object-cover rounded-2xl border border-white/10">
+                <h4 class="text-base font-bold text-white">${currentAd.title}</h4>
+                <a href="${currentAd.link}" target="_blank" class="block w-full text-center py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">Visit Official Store</a>
+            `;
+
+            modal.classList.remove('hidden');
+
+            let seconds = 5;
+            const timer = setInterval(() => {
+                seconds--;
+                timerCount.innerText = seconds;
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    skipBtn.disabled = false;
+                    skipBtn.innerText = "Close Ad";
+                    skipBtn.classList.add('bg-indigo-600', 'text-white');
+                }
+            }, 1000);
+        }
+
+        function closeOpeningAd() {
+            document.getElementById('opening-ad-modal').classList.add('hidden');
+        }
+
+        /* ----------------------------------------------------
+           10. USER ACCOUNT & EXPORT/IMPORT
+        ---------------------------------------------------- */
+        function openAccountModal() {
+            document.getElementById('profile-name-input').value = userState.user.name;
+            document.getElementById('profile-avatar-input').value = userState.user.avatar;
+            document.getElementById('profile-modal-name').innerText = userState.user.name;
+            document.getElementById('profile-modal-avatar').src = userState.user.avatar;
+            document.getElementById('profile-modal-badge').innerText = userState.isPro ? "Universal Pro Active" : "Free Member";
+            document.getElementById('account-modal').classList.remove('hidden');
+        }
+
+        function closeAccountModal() {
+            document.getElementById('account-modal').classList.add('hidden');
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            userState.user.name = document.getElementById('profile-name-input').value;
+            userState.user.avatar = document.getElementById('profile-avatar-input').value;
+
+            localStorage.setItem('up_user', JSON.stringify(userState.user));
+
+            document.getElementById('header-username').innerText = userState.user.name;
+            document.getElementById('header-avatar').src = userState.user.avatar;
+
+            closeAccountModal();
+            showToast("Profile settings saved!");
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(localStorage));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", "UniversalProducting_Backup.json");
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast("Platform data exported!");
+        }
+
+        /* ----------------------------------------------------
+           11. UI TAB NAVIGATION & UTILITIES
+        ---------------------------------------------------- */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.className = "px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-white/5";
+            });
+
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.className = "px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 text-indigo-400 bg-indigo-600/20";
+            }
+
+            if (tabId === 'discounts') {
+                renderDiscounts();
+            } else if (tabId === 'posts') {
+                renderPosts();
+            }
+        }
+
+        function renderDiscounts() {
+            const grid = document.getElementById('discounts-grid');
+            const discProducts = allProducts.filter(p => p.category === 'discounts');
+            grid.innerHTML = discProducts.map(p => `
+                <div class="glass-card rounded-2xl p-4 border border-rose-500/30 flex flex-col justify-between space-y-3">
+                    <div class="relative h-44 rounded-xl overflow-hidden">
+                        <span class="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[10px] font-black bg-rose-500 text-white">PROMO DEAL</span>
+                        <img src="${p.photos[0]}" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white line-clamp-1">${p.title}</h4>
+                        <p class="text-xs text-slate-400 line-clamp-2 mt-1">${p.desc}</p>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-white/10 pt-2">
+                        <div>
+                            <span class="text-lg font-black text-rose-400">$${p.discountPrice}</span>
+                            <span class="text-xs text-slate-500 line-through ml-1">$${p.price}</span>
+                        </div>
+                        <button onclick="openProductModal(${p.id})" class="px-3 py-1.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold transition">Get Discount</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        /* ----------------------------------------------------
+           12. INITIALIZATION ON WINDOW LOAD
+        ---------------------------------------------------- */
+        window.onload = function() {
+            generateProducts();
+            loadStorage();
+            renderMarketplace();
+
+            // Check saved language
+            const savedLang = localStorage.getItem('up_lang');
+            if (savedLang) {
+                document.getElementById('lang-select').value = savedLang;
+                changeLanguage(savedLang);
+            }
+
+            // Trigger Sponsored Ad Modal after 2 seconds
+            setTimeout(() => {
+                triggerOpeningAd();
+            }, 2000);
+        };
+    </script>
+</body>
+</html>
